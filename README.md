@@ -5,13 +5,13 @@ Statistical method for genetic convergence analysis using cross-fitting
 
 ```
 .
+├── R
+│   ├── (to_be_remove?)group_lasso_function.R
+│   ├── collect_and_structure_results.R
+│   ├── convergence.R
+│   └── group_lasso_function.R
 ├── README.md
 └── yao_2023
-    ├── R
-    │   ├── (to_be_remove?)group_lasso_function.R
-    │   ├── collect_and_structure_results.R
-    │   ├── convergence.R
-    │   └── group_lasso_function.R
     ├── code
     │   ├── 01_subsetting_genes.R
     │   ├── 02_remove_cell_cycle.R
@@ -75,5 +75,4 @@ Statistical method for genetic convergence analysis using cross-fitting
         ├── PCA_cell_cycle_before.pdf
         ├── PCA_chennel_before.pdf
         ├── first_pass_result.csv
-        └── violin_plot_QC.pdf
-```
+        └── violin_plot_QC.pdf```
