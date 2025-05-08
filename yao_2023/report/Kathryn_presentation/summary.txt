@@ -1,0 +1,7 @@
+There is a large group of non-targeting cells, consisting of 4,492 cells, which are treated as controls.
+
+I created 42 clusters from the 2,000 genes with the highest expression levels.
+
+Among the 42 clusters, one is a gray cluster with no correlation; 19 are based on empirical correlation, and the remaining 22 are determined using GO similarity or shared functions. The cluster sizes range from 12 to 129 genes, with an average size of 47. The gray cluster contains 111 genes. Only the non-targeting control cells are used to construct the clusters.
+
+I investigated the 50 perturbations reported in their paper. The sample sizes for each perturbation range from 41 to 173 cells. To accelerate computation, I subsampled 500 control cells when establishing convergence results.
