@@ -1,5 +1,5 @@
 library(glue)
-work_directory <- '/Users/tianyuzhang/Documents/convergence_risk_gene/try_Cleary_data/'    
+work_directory <- '~/Documents/genetic_convergence/yao_2023/'    
 residual_matrix <- readRDS(file = glue(work_directory, 'data/intermediate_data/residual_matrix.rds'))
 
 # perturbation_interest <- c('non-targeting', 'STAT1', 'STAT2', 'MEF2C', 
@@ -18,5 +18,4 @@ length(table(residual_subset$Guides_collapsed_by_gene))
 perturbation_interest[!perturbation_interest %in% names(table(residual_subset$Guides_collapsed_by_gene))]
 # saveRDS(residual_subset, glue(work_directory, 'data/intermediate_data/residual_matrix_small.rds'))
 saveRDS(residual_subset, glue(work_directory, 'data/intermediate_data/residual_matrix_all_in_paper.rds'))
-
 

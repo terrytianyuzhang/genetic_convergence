@@ -4,8 +4,8 @@ library(patchwork)
 library(glue)
 library(ggplot2)
 library(data.table)
-work_directory <- '/Users/tianyuzhang/Documents/convergence_risk_gene/try_Cleary_data/'    
-file_name <- glue::glue(work_directory, 'data/intermediate_data/after_subsetting.rds')
+work_directory <- '~/Documents/genetic_convergence/yao_2023/'    
+file_name <- glue::glue(work_directory, 'data/raw_data/after_subsetting.rds')
 
 ###remove low quanlity cells
 Cleary <- readRDS(file_name)

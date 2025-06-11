@@ -1,6 +1,6 @@
 rm(list = ls())
 library(glue)
-work_directory <- '/Users/tianyuzhang/Documents/convergence_risk_gene/try_Cleary_data/' 
+work_directory <- '~/Documents/genetic_convergence/yao_2023/'    
 residual_subset <- readRDS(glue(work_directory, 'data/intermediate_data/residual_matrix_all_in_paper.rds'))
 residual_subset <- data.table(residual_subset)
 colnames(residual_subset) <- gsub("\\.", "-", colnames(residual_subset))

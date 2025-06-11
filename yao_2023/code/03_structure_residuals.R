@@ -1,5 +1,5 @@
 library(glue)
-work_directory <- '/Users/tianyuzhang/Documents/convergence_risk_gene/try_Cleary_data/'    
+work_directory <- '~/Documents/genetic_convergence/yao_2023/'    
 file_name <- glue::glue(work_directory, 'data/intermediate_data/after_subsetting.rds')
 Cleary <- readRDS(file_name)
 
