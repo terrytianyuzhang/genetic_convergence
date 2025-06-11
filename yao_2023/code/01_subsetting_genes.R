@@ -1,5 +1,5 @@
-work_directory <- '/Users/tianyuzhang/Documents/convergence_risk_gene/try_Cleary_data/'    
-file_name <- glue::glue(work_directory, 'data/GSM6858447_KO_conventional.rds')
+work_directory <- '~/Documents/genetic_convergence/yao_2023/'    
+file_name <- glue::glue(work_directory, 'data/raw_data/GSM6858447_KO_conventional.rds')
 
 ###read in the original data
 Cleary_raw <- readRDS(file_name)
@@ -12,4 +12,4 @@ gene_count <- 2000
 genes_selected <- names(sort.int(mean_exp, decreasing = T))[1:gene_count]
 
 Cleary_subset_gene <- subset(Cleary_raw, features = genes_selected)
-saveRDS(Cleary_subset_gene, file = glue::glue(work_directory, 'data/intermediate_data/after_subsetting.rds'))
+saveRDS(Cleary_subset_gene, file = glue::glue(work_directory, 'data/raw_data/after_subsetting.rds'))
