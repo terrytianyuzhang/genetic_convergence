@@ -23,4 +23,3 @@ perturbation_interest[!perturbation_interest %in% names(table(residual_subset$Gu
 # saveRDS(residual_subset, glue(work_directory, 'data/intermediate_data/residual_matrix_small.rds'))
 saveRDS(residual_subset, glue(work_directory, 'data/intermediate_data/residual_matrix_all_in_paper.rds'))
 
-
