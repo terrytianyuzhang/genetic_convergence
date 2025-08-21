@@ -6,7 +6,7 @@ library(doParallel)
 library(foreach)
 
 rm(list = ls())
-work_directory <- '/Users/tianyuzhang/Documents/convergence_risk_gene/try_Cleary_data/'
+work_directory <- '/Users/tianyuzhang/Documents/genetic_convergence/'
 work_directory <- '/raid6/Tianyu/convergence_risk_gene/try_Cleary_data/'
 
 source(glue(work_directory, 'R/convergence.R'))

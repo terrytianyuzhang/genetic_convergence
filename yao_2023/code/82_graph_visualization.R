@@ -24,16 +24,13 @@ parsed_results <- parse_download_results()
 mode <- "both"  
 
 # Create output directory if it doesn't exist
-output_dir <- glue(work_directory, "report/", batch_name, "_igraph/")
+output_dir <- glue(work_directory, "yao_2023/report/", batch_name, "_igraph/")
 if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
-
-# Remove all existing plots in the output directory
-file.remove(list.files(output_dir, full.names = TRUE))
 
 # Loop through all unique module indices
 for (module_index in unique(parsed_results$active_feature)) {
   
-  dt <- parsed_results[active_feature == module_index & p_value < 0.05]
+  dt <- parsed_results[active_feature == module_index & p_value < 0.05/(50*49)]
   if (nrow(dt) == 0) next  # Skip if no significant pairs
   
   # Standardize gene pair ordering
@@ -79,7 +76,7 @@ for (module_index in unique(parsed_results$active_feature)) {
   scaled_width <- pmin(dt_edges$edge_width, 3)
 
   
-  edge_colors <- colorRampPalette(c("lightgray", "darkred"))(100)
+  edge_colors <- colorRampPalette(c("#EEEEEE", "#013e75"))(100)
   edge_col_indices <- as.integer(rescale(dt_edges$edge_width, to = c(1, 100)))
   edge_col <- edge_colors[edge_col_indices]
   
@@ -103,10 +100,10 @@ for (module_index in unique(parsed_results$active_feature)) {
   }
   
   # Save plot to file with size tag
-  plot_path <- glue(output_dir, "/{size_tag}_module_{module_index}_mode_{mode}.pdf")
+  plot_path <- glue(output_dir, "{size_tag}_module_{module_index}_mode_{mode}.pdf")
   
   # Load annotation for this module
-  annotation_path <- glue(work_directory, "data/final_data/module_GO/module_{module_index}.csv")
+  annotation_path <- glue(work_directory, "yao_2023/data/final_data/module_GO/module_{module_index}.csv")
   if (file.exists(annotation_path)) {
     annotation_dt <- fread(annotation_path)
     annotation_dt <- annotation_dt[p.adjust < 0.05,]
@@ -118,7 +115,7 @@ for (module_index in unique(parsed_results$active_feature)) {
     annotation_text <- "No annotation available."
   }
   
-  pdf(file = plot_path, width = 8, height = 7, useDingbats = FALSE)  # adjust width/height as needed
+  pdf(file = plot_path, width = 8, height = 4, useDingbats = FALSE)  # adjust width/height as needed
   
   plot(
     g,
@@ -129,34 +126,34 @@ for (module_index in unique(parsed_results$active_feature)) {
     vertex.size = scaled_size,
     vertex.frame.color = "black",
     vertex.frame.width = 1.5,
-    vertex.color = "#fdd835",
+    vertex.color = "#f5b70a",
     edge.width = scaled_width,
     edge.color = edge_col,
     main = glue("Perturbation convergence on module {module_index}"),
-    margin = 0.2
+    margin = 0
   )
   
   # Position annotation in the top-left of the plotting area
   usr_coords <- par("usr")  # get current plot coordinates
-  
+
   # Adjust starting position (top-left)
-  x_pos <- usr_coords[1] + 0.01 * (usr_coords[2] - usr_coords[1])
-  y_pos <- usr_coords[4] - 0.01 * (usr_coords[4] - usr_coords[3])
-  
-  # Line height offset
-  line_spacing <- strheight("M", cex = 0.7) * 1.2
-  
-  # Draw each line
-  for (i in seq_along(annotation_text)) {
-    text(
-      x = x_pos,
-      y = y_pos - (i - 1) * line_spacing,
-      labels = annotation_text[i],
-      adj = c(0, 1),
-      cex = 0.7,
-      col = "gray30"
-    )
-  }
+  # x_pos <- usr_coords[1] + 0.01 * (usr_coords[2] - usr_coords[1])
+  # y_pos <- usr_coords[4] - 0.01 * (usr_coords[4] - usr_coords[3])
+  # 
+  # # Line height offset
+  # line_spacing <- strheight("M", cex = 0.7) * 1.2
+
+  # # Draw each line
+  # for (i in seq_along(annotation_text)) {
+  #   text(
+  #     x = x_pos,
+  #     y = y_pos - (i - 1) * line_spacing,
+  #     labels = annotation_text[i],
+  #     adj = c(0, 1),
+  #     cex = 0.7,
+  #     col = "gray30"
+  #   )
+  # }
   
   dev.off()
 }
