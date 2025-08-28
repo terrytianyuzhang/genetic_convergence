@@ -97,9 +97,9 @@ module_sz  <- 10
 mu_control_mods <- c(1, 1, 1, 1, 1, 1, 1)   # length n_modules
 # mu_tr1_mods <- c(1.5, 1.5, 1.5, 1, 1, 1, 1)   # length n_modules
 # mu_tr1_mods <- c(1.0, 0.5, 1.5, 1, 1, 1, 1)   # length n_modules
-mu_tr1_mods <- c(1.0, 1.5, 1.5, 1, 1, 1, 1)   # length n_modules
-mu_tr2_mods <- c(1.5, 1.0, 1.0, 0.5, 1, 1, 1)   # length n_modules
-# mu_tr2_mods <- c(1.0, 1.0, 1.0, 0.5, 1.5, 1, 1)   # length n_modules
+# mu_tr1_mods <- c(1.0, 1.5, 1.5, 1, 1, 1, 1)   # length n_modules
+mu_tr1_mods <- c(1.5, 1.0, 1.0, 0.5, 1, 1, 1)   # length n_modules
+mu_tr2_mods <- c(1.0, 1.0, 1.0, 0.5, 1.5, 1, 1)   # length n_modules
 
 mu_control_mods <- c(mu_control_mods, rep(1, n_modules - length(mu_control_mods)))
 mu_tr1_mods <- c(mu_tr1_mods, rep(1, n_modules - length(mu_tr1_mods)))
