@@ -41,36 +41,35 @@ all_treatment_names <- all_treatment_names[all_treatment_names != 'non-targeting
 
 log_file <- glue(work_directory, 'log/logs.txt')
 
-# set up parallel backend
-ncores <- max(1L, parallel::detectCores() - 1L)
-cl <- makeCluster(ncores)
-registerDoParallel(cl)
-
-i <- 1
-treatment_name <- all_treatment_names[i]
-
-res_list <- foreach(
-  module_index = unique(clustering$cluster_index),
-  .packages = c("data.table", "highmean", "glue"),
-  .export   = c("preprocess_one_setting", "residual_subset", "treatment_name",
-                "clustering", "control", "work_directory")
-) %dopar% {
-  treatment <- preprocess_one_setting(residual_subset, treatment_name, clustering)
-  gene_compared <- clustering[cluster_index == module_index, ]$gene_name
+for(treatment_name in all_treatment_names){
   
-  control_one_module <- as.matrix(control[, ..gene_compared])
-  treatment_one_module <- as.matrix(treatment[, ..gene_compared])
+  # set up parallel backend
+  ncores <- max(1L, parallel::detectCores() - 1L)
+  cl <- makeCluster(ncores)
+  registerDoParallel(cl)
   
-  test_result <- tryCatch(
-    apval_Chen2010(control_one_module, treatment_one_module, eq.cov = FALSE),
-    error = function(e) NA_real_
-  )
-  
-  output_filename <- paste0(work_directory, 'data/intermediate_data/A1_chen_method/', treatment_name, '_module_', module_index,'.rds')
-  saveRDS(test_result, file = output_filename)
+  res_list <- foreach(
+    module_index = unique(clustering$cluster_index),
+    .packages = c("data.table", "highmean", "glue"),
+    .export   = c("preprocess_one_setting", "residual_subset", "treatment_name",
+                  "clustering", "control", "work_directory")
+  ) %dopar% {
+    treatment <- preprocess_one_setting(residual_subset, treatment_name, clustering)
+    gene_compared <- clustering[cluster_index == module_index, ]$gene_name
+    
+    control_one_module <- as.matrix(control[, ..gene_compared])
+    treatment_one_module <- as.matrix(treatment[, ..gene_compared])
+    
+    test_result <- tryCatch(
+      apval_Chen2010(control_one_module, treatment_one_module, eq.cov = FALSE),
+      error = function(e) NA_real_
+    )
+    
+    output_filename <- paste0(work_directory, 'data/intermediate_data/A1_chen_method/', treatment_name, '_module_', module_index,'.rds')
+    saveRDS(test_result, file = output_filename)
+  }
+  stopCluster(cl)
 }
-
-
 
 # 
 # 
