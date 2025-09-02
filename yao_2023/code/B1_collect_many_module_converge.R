@@ -1,11 +1,13 @@
+library(glue)
 library(data.table)
-
+library(ggplot2)
 rm(list = ls())
-work_directory <- '/Users/tianyuzhang/Documents/genetic_convergence/yao_2023'
-# work_directory <- '/raid6/Tianyu/convergence_risk_gene/try_Cleary_data/'
-out_dir <- file.path(work_directory, "data", "intermediate_data", "A1_chen_method")
-rds_path <- file.path(out_dir, "processed_data.rds")
-processed_results <- readRDS(file = rds_path)
+work_directory <- '/Users/tianyuzhang/Documents/genetic_convergence/'
+source(glue(work_directory, 'R/collect_and_structure_results.R'))
+
+batch_name <- '51_pairwise'
+processed_results <- fread(glue(work_directory, '/yao_2023/data/intermediate_data/', batch_name, '/processed_results.csv'))
+# Assuming `prossed_results` is a data.table
 
 processed_results <- processed_results[, .(comparison, p_value, active_group)]
 processed_results[, c("gene1", "gene2") := tstrsplit(comparison, "_vs_")]
@@ -48,38 +50,16 @@ merged_results[, relevant_module :=
                         MoreArgs = list(mode = "intersection"))]
 module_num_dt <- merged_results[gene1 > gene2, .(gene1, gene2, relevant_module)]
 
-library(ggplot2)
-library(ggnewscale)
+p_value_n_module_num_dt <- merge(p_value_dt, module_num_dt, 
+                                 by.x = c("gene1", "gene2"),
+                                 by.y = c("gene2", "gene1"),)
+dir.create(paste0(work_directory, "/yao_2023/data/intermediate_data/B1_interesting_pairs/"))
+high_num_pair <- p_value_n_module_num_dt[relevant_module >= 4 & is_significant == 2, ]
+fwrite(high_num_pair, file = paste0(work_directory, "/yao_2023/data/intermediate_data/B1_interesting_pairs/greater_than_4_modules.csv"))
 
-p <- ggplot() +
-  # modules: continuous color (will be 2nd legend)
-  geom_point(data = module_num_dt,
-             aes(x = gene1, y = gene2, color = relevant_module, size = relevant_module),
-             alpha = 0.7) +
-  scale_color_gradient(low = "#EEEEEE", high = "#663B8C",
-                       name = "# of relevant modules",
-                       guide = guide_colorbar(order = 2)) +
-  scale_size_continuous(guide = "none") +
-  theme_minimal() +
-  labs(x = "Gene 1", y = "Gene 2") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-  
-  ggnewscale::new_scale_color() +
-  
-  # significance: discrete colors (will be 1st legend, on top)
-  geom_point(data = p_value_dt,
-             aes(x = gene1, y = gene2, color = is_significant),
-             size = 3, alpha = 0.7) +
-  scale_color_manual(
-    values = c("0" = "#EEEEEE", "2" = "#f5b70a"),
-    labels = c("No", "Yes"),
-    name   = "Convergence",
-    guide  = guide_legend(order = 1)
-  )
+high_num_pair <- p_value_n_module_num_dt[relevant_module >= 3 & is_significant == 2, ]
+fwrite(high_num_pair, file = paste0(work_directory, "/yao_2023/data/intermediate_data/B1_interesting_pairs/greater_than_3_modules.csv"))
 
-plot(p)
-
-ggsave(p, file = "/Users/tianyuzhang/Documents/genetic_convergence/paper_plots/data/A3_chen_convergence.pdf",
-       width = 9, height = 6*9/8, bg = "transparent")
-
+high_num_pair <- p_value_n_module_num_dt[relevant_module >= 2 & is_significant == 2, ]
+fwrite(high_num_pair, file = paste0(work_directory, "/yao_2023/data/intermediate_data/B1_interesting_pairs/greater_than_2_modules.csv"))
 
