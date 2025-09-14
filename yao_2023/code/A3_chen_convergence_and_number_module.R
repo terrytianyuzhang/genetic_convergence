@@ -72,7 +72,8 @@ p <- ggplot() +
              size = 3, alpha = 0.7) +
   scale_color_manual(
     values = c("0" = "#EEEEEE", "2" = "#f5b70a"),
-    labels = c("No", "Yes"),
+    labels = c("Yes", "No"),
+    breaks = c("2", "0"),
     name   = "Convergence",
     guide  = guide_legend(order = 1)
   )

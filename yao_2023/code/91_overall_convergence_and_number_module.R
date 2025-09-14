@@ -74,7 +74,8 @@ p <- ggplot() +
              size = 3, alpha = 0.7) +
   scale_color_manual(
     values = c("0" = "#EEEEEE", "1" = "#013e75", "2" = "#f5b70a"),
-    labels = c("p>0.05", "p<0.05", "Adj.p<0.05"),
+    labels = c("Adj.p<0.05", "p<0.05", "p>0.05"),
+    breaks = c("2", "1", "0"),   # order of legend items
     name   = "Convergence",
     guide  = guide_legend(order = 1)
   )
