@@ -35,7 +35,15 @@ rows <- lapply(files, function(f) {
 summary_dt <- rbindlist(rows, use.names = TRUE, fill = TRUE)
 setorder(summary_dt, treatment_name, module_index)
 
-summary_dt[, is.significant := p_value < 0.05 / max(summary_dt$module_index)]
+clustering_file <- glue(work_directory, "/data/module_list_df_2000_genes.csv")
+clustering <- data.table(read.csv(clustering_file))
+clustering$gene_name <- gsub("\\.", "-", clustering$gene_name)
+num_module <- max(clustering$cluster_index)
+
+num_pert <- 50
+correction_num <- (num_pert * (num_pert - 1) / 2) * num_module
+
+summary_dt[, is.significant := p_value < 0.05 / correction_num]
 
 all_treatment_names <- unique(summary_dt$treatment_name)
 treatment_pairs <- expand.grid(treatment1 = all_treatment_names, treatment2 = all_treatment_names)

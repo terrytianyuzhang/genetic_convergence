@@ -1,7 +1,8 @@
+rm(list = ls())
 library(glue)
 library(data.table)
 library(ggplot2)
-rm(list = ls())
+
 work_directory <- '/Users/tianyuzhang/Documents/genetic_convergence/'
 source(glue(work_directory, 'R/collect_and_structure_results.R'))
 
@@ -27,4 +28,7 @@ processed_results[gene1 == 'TRIB1' & gene2 == "TRAF6", ]
 
 processed_results[gene1 == 'STAT1' & gene2 == "STAT2", ]
 processed_results[gene1 == 'STAT2' & gene2 == "STAT1", ]
-
+processed_results[gene1 == 'STAT2' & gene2 == "TYK2", ]
+processed_results[gene1 == 'TYK2' & gene2 == "STAT2", ]
+processed_results[gene1 == 'STAT1' & gene2 == "TYK2", ]
+processed_results[gene1 == 'TYK2' & gene2 == "STAT1", ]

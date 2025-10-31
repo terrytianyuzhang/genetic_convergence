@@ -17,8 +17,7 @@ merged_results[, p_max := pmax(p_value.x, p_value.y)]
 
 threshold <- 0.025
 merged_results[, is_significant := 0]
-merged_results[, is_significant := is_significant + (p_max < threshold)]
-merged_results[, is_significant := is_significant + (p_max < threshold/2450)]
+merged_results[, is_significant := is_significant + 2*(p_max < threshold)]
 merged_results[, is_significant := factor(is_significant, levels = c(0, 1, 2))]
 
 p_value_dt <- merged_results[gene1 < gene2, .(gene1, gene2, is_significant)]
@@ -83,4 +82,4 @@ plot(p)
 ggsave(p, file = "/Users/tianyuzhang/Documents/genetic_convergence/paper_plots/data/A3_chen_convergence.pdf",
        width = 9, height = 6*9/8, bg = "transparent")
 
-
+summary(p_value_dt$is_significant)

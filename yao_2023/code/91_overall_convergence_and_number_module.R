@@ -3,7 +3,7 @@ library(data.table)
 library(ggplot2)
 rm(list = ls())
 work_directory <- '/Users/tianyuzhang/Documents/genetic_convergence/'
-source(glue(work_directory, 'R/collect_and_structure_results.R'))
+# source(glue(work_directory, 'R/collect_and_structure_results.R'))
 
 batch_name <- '51_pairwise'
 processed_results <- fread(glue(work_directory, '/yao_2023/data/intermediate_data/', batch_name, '/processed_results.csv'))
