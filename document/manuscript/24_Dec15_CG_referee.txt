@@ -1,0 +1,4 @@
+For Yao you can add that he has expertise in ML.
+Qiao Liu is an asst prof of Biostatistics at Yale.  He is an expert on perturb-seq experiments and develps methods for the analysis of these data.
+Joe Dougherty is a well known genomics/genetics expert, both with in the  wet lab and methods analysis.  He has experience with perturb-seq experiments.  He is knowledgeable about methods for determining gene function.
+Jake Jeung is in the Genentech research group that specializes in perturb-seq experiments.  He has expertise in ML techniques.  He is well versed in how these experiments play a role in drug development. 

@@ -1,0 +1,14 @@
+Paper 1
+Related/Foundational paper title: Scalable genetic screening for regulatory circuits using compressed perturb-seq.
+Reference: Douglas Yao, Loic Binan, Jon Bezney, Brooke Simonton, Jahanara Freedman, Chris J Frangieh, Kushal Dey, Kathryn Geiger-Schuller, Basak Eraslan, Alexander Gusev, et al. Scalable genetic screening for regulatory circuits using compressed perturb-seq. Nature biotechnology, 42(8):1282–1295, 2024.
+Brief explanation: One of the main goals of Paper 1 is to assess genetic convergence across a large number of CRISPR perturbations. The tools provided in Paper 1, as this was not its sole focus, are more heuristic in nature and thus offer opportunities for us to develop more robust and principled solutions. The dataset accompanying this publication is of high quality and has been extensively investigated in the current work.
+
+Paper 2
+Related/Foundational paper title: Cell-type-specific co-expression inference from single cell rna-sequencing data.
+Reference: Chang Su, Zichun Xu, Xinning Shan, Biao Cai, Hongyu Zhao, and Jingfei Zhang. Cell-type-specific co-expression inference from single cell rna-sequencing data. Nature Communications, 14(1):4846, 2023.
+Brief explanation: The correlation-structure discovery algorithm described in Paper 2 is very efficient. We applied it extensively in our framework to define correlated gene modules, facilitating gene-module–level convergence assessment.
+
+Paper 3
+Related/Foundational paper title: A new bayesian factor analysis method improves detection of genes and biological processes affected by perturbations in single-cell crispr screening
+Reference: Yifan Zhou, Kaixuan Luo, Lifan Liang, Mengjie Chen, and Xin He. A new bayesian factor analysis method improves detection of genes and biological processes affected by perturbations in single-cell crispr screening. Nature Methods, 20(11):1693–1703, 2023.
+Brief explanation: Paper 3 initially drew our attention to analyzing differential expression and genetic convergence at the gene-module level. The reported method also raised our interest in defining methods that offer better false discovery control.

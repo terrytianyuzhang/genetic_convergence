@@ -1,13 +1,7 @@
-library(glue)
-library(data.table)
-library(ggplot2)
-rm(list = ls())
-work_directory <- '/Users/tianyuzhang/Documents/genetic_convergence/'
-source(glue(work_directory, 'R/collect_and_structure_results.R'))
 
 batch_name <- '51_pairwise'
-processed_results <- fread(glue(work_directory, '/yao_2023/data/intermediate_data/', batch_name, '/processed_results.csv'))
-# Assuming `prossed_results` is a data.table
+processed_results <- fread(glue(work_directory, 
+                                '/yao_2023/data/intermediate_data/', batch_name, '/processed_results.csv'))
 
 processed_results <- processed_results[, .(comparison, p_value, active_group)]
 processed_results[, c("gene1", "gene2") := tstrsplit(comparison, "_vs_")]
@@ -53,13 +47,17 @@ module_num_dt <- merged_results[gene1 > gene2, .(gene1, gene2, relevant_module)]
 p_value_n_module_num_dt <- merge(p_value_dt, module_num_dt, 
                                  by.x = c("gene1", "gene2"),
                                  by.y = c("gene2", "gene1"),)
-dir.create(paste0(work_directory, "/yao_2023/data/intermediate_data/B1_interesting_pairs/"))
+dir.create(paste0(work_directory, 
+                  "/yao_2023/data/intermediate_data/B1_interesting_pairs/"))
 high_num_pair <- p_value_n_module_num_dt[relevant_module >= 4 & is_significant == 2, ]
-fwrite(high_num_pair, file = paste0(work_directory, "/yao_2023/data/intermediate_data/B1_interesting_pairs/greater_than_4_modules.csv"))
+fwrite(high_num_pair, file = paste0(work_directory, 
+                                    "/yao_2023/data/intermediate_data/B1_interesting_pairs/greater_than_4_modules.csv"))
 
 high_num_pair <- p_value_n_module_num_dt[relevant_module >= 3 & is_significant == 2, ]
-fwrite(high_num_pair, file = paste0(work_directory, "/yao_2023/data/intermediate_data/B1_interesting_pairs/greater_than_3_modules.csv"))
+fwrite(high_num_pair, file = paste0(work_directory, 
+                                    "/yao_2023/data/intermediate_data/B1_interesting_pairs/greater_than_3_modules.csv"))
 
 high_num_pair <- p_value_n_module_num_dt[relevant_module >= 2 & is_significant == 2, ]
-fwrite(high_num_pair, file = paste0(work_directory, "/yao_2023/data/intermediate_data/B1_interesting_pairs/greater_than_2_modules.csv"))
+fwrite(high_num_pair, file = paste0(work_directory, 
+                                    "/yao_2023/data/intermediate_data/B1_interesting_pairs/greater_than_2_modules.csv"))
 
